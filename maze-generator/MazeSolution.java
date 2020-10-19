@@ -12,7 +12,7 @@ public class MazeSolution {
         dimension = maze.length;
         for (int i = 0; i < dimension; i++) {
             for (int j = 0; j < dimension; j++) {
-                if (maze[i][j] == 1)
+                if (maze[i][j] == -3)
                     start = new Node(i, j);
                 if (maze[i][j] == -2)
                     finish = new Node(i, j);
@@ -23,7 +23,7 @@ public class MazeSolution {
     MazeSolution(int[][] maze, int xStart, int xFinish, int yStart, int yFinish) {
         this.maze = maze;
         dimension = maze.length;
-        maze[xStart][xFinish] = 1;
+        maze[xStart][xFinish] = -3;
         maze[yStart][yFinish] = -2;
         start = new Node(xStart, xFinish);
         finish = new Node(yStart, yFinish);
@@ -41,6 +41,7 @@ public class MazeSolution {
     }
 
     public boolean isSolved() { //????????????????
+
 
         if (maze[finish.x - 1][finish.y] != -1 && maze[finish.x - 1][finish.y] != 0)
             return true;
@@ -72,6 +73,8 @@ public class MazeSolution {
                 else if (maze[i][j] == -2)
                     sb.append("F");
                 else if (maze[i][j] == 1)
+                    sb.append("▀");
+                else if (maze[i][j] == -3)
                     sb.append("S");
                 else
                     sb.append(" ");
@@ -97,16 +100,20 @@ public class MazeSolution {
         pas=0;
         if (solveMaze(start.x, start.y)) {
             System.out.println("Solution exists");
+            System.out.println(getSymbolicMaze());
 
-        } else System.out.println("Nu exista ");;
+        } else System.out.println("Solution doesn't exist");;
     }
 
     public boolean solveMaze(int x, int y) {
         if (x == finish.x && y == finish.y) {
             return true;
         }
-        System.out.println(pas++);
-
+        /*System.out.println(pas);
+        pas++;
+        if(pas==10)
+            System.out.println(getSymbolicMaze());
+        */
         if (isSafe(x, y)) {
             maze[x][y] =1;
 
